@@ -14,9 +14,15 @@ J = 0;
 %               You should set J to the cost.
 
 sigma = 0;
+hypothesis = zeros(m, 1);
 
 for i = 1:m
-  sigma = sigma + (theta(1,1) + theta(2,1) * X(i,2) - y(i, 1))^2;
+  hypothesis(i) = theta(1,1) + theta(2,1) * X(i,2);
+endfor
+
+
+for i = 1:m  
+    sigma = sigma + (hypothesis(i) - y(i))^2;
 endfor
 
 J = sigma / (2*m);
