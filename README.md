@@ -1,3 +1,3 @@
 # machine-learning
 
-practice for the coursera's course machine learning by Andrew NG.
+Programming assignment for machine learning course by Andrew NG on coursera.
