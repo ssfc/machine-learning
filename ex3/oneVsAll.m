@@ -11,6 +11,8 @@ function [all_theta] = oneVsAll(X, y, num_labels, lambda)
 m = size(X, 1);
 n = size(X, 2);
 
+% m = 5000, n = 400;
+
 % You need to return the following variables correctly 
 all_theta = zeros(num_labels, n + 1);
 
@@ -52,10 +54,23 @@ X = [ones(m, 1) X];
 
 
 
+% Run fmincg to obtain the optimal theta
+% This function will return theta and the cost 
 
-
-
-
+for i = 1:num_labels % i is label;
+  
+    % Initialize fitting parameters
+    initial_theta = zeros(n + 1, 1);
+    
+    % Set Options
+    options = optimset('GradObj', 'on', 'MaxIter', 50);
+    
+    [theta] = fmincg (@(t)(lrCostFunction(t, X, (y == i), lambda)), ...
+                     initial_theta, options);
+  
+    all_theta(i, 1:end) = theta';
+  
+endfor
 
 
 
