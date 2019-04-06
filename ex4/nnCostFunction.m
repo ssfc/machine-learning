@@ -88,7 +88,24 @@ endfor
 J = sum / m;
 
 
+%size(Theta1),size(Theta2)
 
+
+sum_left = 0;
+for i=1:size(Theta1, 1)
+    for j=2:size(Theta1, 2)
+        sum_left = sum_left + Theta1(i, j)^2;
+    endfor
+endfor
+
+sum_right = 0;
+for i=1:size(Theta2, 1)
+    for j=2:size(Theta2, 2)
+        sum_right = sum_right + Theta2(i, j)^2;
+    endfor
+endfor
+
+J = J + (lambda/(2*m))*(sum_left + sum_right);
 
 
 
