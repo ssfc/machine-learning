@@ -27,8 +27,8 @@ m = size(X, 1);
          
 % You need to return the following variables correctly 
 J = 0;
-Theta1_grad = zeros(size(Theta1));
-Theta2_grad = zeros(size(Theta2));
+Theta1_grad = zeros(size(Theta1)); % 25*401;
+Theta2_grad = zeros(size(Theta2)); % 10*26;
 
 % ====================== YOUR CODE HERE ======================
 % Instructions: You should complete the code by working through the
@@ -61,14 +61,18 @@ Theta2_grad = zeros(size(Theta2));
 %               the regularization separately and then add them to Theta1_grad
 %               and Theta2_grad from Part 2.
 %
-%%-------------------------------------------------------------------------------
-% calculate output matrix;
-input = [ones(m,1), X];
-hidden = sigmoid(input * (Theta1'));
-hidden = [ones(m,1), hidden];
-output = sigmoid(hidden * (Theta2'));
+%%---------------------------calculate output matrix--------------------------
+% 
+a1 = [ones(m,1), X]; % 5000*401;
 
-y_matrix = zeros(m, num_labels);
+z2 = a1 * (Theta1'); % 5000*25;
+a2 = sigmoid(z2); % 5000*25;
+a2 = [ones(m,1), a2]; % 5000*26;
+
+z3 = a2 * (Theta2'); % 5000*10;
+a3 = sigmoid(z3); % 5000*10;
+
+y_matrix = zeros(m, num_labels); % 5000*10;
 
 for i=1:m
     if(y(i)==0)
@@ -81,7 +85,7 @@ endfor
 sum = 0;
 for i=1:m
     for j=1:num_labels
-        sum = sum - y_matrix(i,j)*log(output(i,j)) - (1-y_matrix(i,j))*log(1-output(i,j));
+        sum = sum - y_matrix(i,j)*log(a3(i,j)) - (1-y_matrix(i,j))*log(1-a3(i,j));
     endfor
 endfor
 
@@ -107,10 +111,18 @@ endfor
 
 J = J + (lambda/(2*m))*(sum_left + sum_right);
 
+% -----------------------calculate Theta1_grad and Theta2_grad---------------------------
+for i=1:m
+    delta3 = (a3(i,1:end))' - (y_matrix(i,1:end))';
+    delta2 = ((Theta2')*delta3)(2:end) .* sigmoidGradient((z2(i,1:end))');
+    
+    Theta1_grad = Theta1_grad + delta2 * a1(i, 1:end);
+    Theta2_grad = Theta2_grad + delta3 * a2(i, 1:end);        
+    
+endfor
 
-
-
-% -------------------------------------------------------------
+Theta1_grad = Theta1_grad / m;
+Theta2_grad = Theta2_grad / m;
 
 % =========================================================================
 
