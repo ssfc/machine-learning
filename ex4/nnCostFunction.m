@@ -111,7 +111,7 @@ endfor
 
 J = J + (lambda/(2*m))*(sum_left + sum_right);
 
-% -----------------------calculate Theta1_grad and Theta2_grad---------------------------
+%%-----------------------calculate Theta1_grad and Theta2_grad---------------------------
 for i=1:m
     delta3 = (a3(i,1:end))' - (y_matrix(i,1:end))';
     delta2 = ((Theta2')*delta3)(2:end) .* sigmoidGradient((z2(i,1:end))');
@@ -123,6 +123,10 @@ endfor
 
 Theta1_grad = Theta1_grad / m;
 Theta2_grad = Theta2_grad / m;
+
+%%------------------------Regularized Neural Networks-------------------------------
+Theta1_grad(1:end, 2:end) = Theta1_grad(1:end, 2:end) + (lambda/m) * Theta1(1:end, 2:end);
+Theta2_grad(1:end, 2:end) = Theta2_grad(1:end, 2:end) + (lambda/m) * Theta2(1:end, 2:end);
 
 % =========================================================================
 
