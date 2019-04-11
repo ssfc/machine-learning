@@ -113,11 +113,11 @@ J = J + (lambda/(2*m))*(sum_left + sum_right);
 
 %%-----------------------calculate Theta1_grad and Theta2_grad---------------------------
 for i=1:m
-    delta3 = (a3(i,1:end))' - (y_matrix(i,1:end))';
-    delta2 = ((Theta2')*delta3)(2:end) .* sigmoidGradient((z2(i,1:end))');
+    delta3 = a3(i,1:end) - y_matrix(i,1:end);
+    delta2 = (delta3*Theta2)(2:end) .* sigmoidGradient(z2(i,1:end));
     
-    Theta1_grad = Theta1_grad + delta2 * a1(i, 1:end);
-    Theta2_grad = Theta2_grad + delta3 * a2(i, 1:end);        
+    Theta1_grad = Theta1_grad + (delta2') * a1(i, 1:end);
+    Theta2_grad = Theta2_grad + (delta3') * a2(i, 1:end);        
     
 endfor
 
