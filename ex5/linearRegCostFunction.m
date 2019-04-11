@@ -34,7 +34,9 @@ sigma2 = (theta(2:end)') * theta(2:end);
 
 J = (1/(2*m))*sigma1 + (lambda/(2*m))*sigma2;
 
-% =========================================================================
+% ===================Regularized linear regression gradient===========================
+temp = [0;theta(2:end)];
+grad = (1/m)*(X'*(hypothesis-y)) + (lambda/m)*temp;
 
 grad = grad(:);
 
