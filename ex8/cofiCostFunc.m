@@ -44,11 +44,11 @@ Theta_grad = zeros(size(Theta));
 %%X, Theta, R, Y
 
 % compute cost;
-J = sum(sum((((X * Theta') - Y).^2) .* R)) / 2;
+J = sum(sum((((X * Theta') - Y).^2) .* R))/2 + (lambda/2) * sum(sum(Theta.^2)) + (lambda/2) * sum(sum(X.^2));
 
 % compute gradient;
-X_grad = (((X * Theta') - Y) .* R) * Theta;
-Theta_grad = (((X * Theta') - Y) .* R)' * X;
+X_grad = (((X * Theta') - Y) .* R) * Theta + lambda * X;
+Theta_grad = (((X * Theta') - Y) .* R)' * X + lambda * Theta;
 
 
 % =============================================================
