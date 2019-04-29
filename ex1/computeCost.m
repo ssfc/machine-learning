@@ -14,10 +14,8 @@ J = 0;
 %               You should set J to the cost.
 
 
-hypothesis = zeros(m, 1);
-hypothesis = X * theta;
-
-J = (hypothesis-y)' * (hypothesis-y) / (2*m);
+delta = X * theta - y;
+J = delta' * delta / (2*m);
 
 % =========================================================================
 
