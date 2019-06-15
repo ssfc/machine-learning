@@ -13,21 +13,18 @@ def sigmoid(z):
 def computeGradient(theta, X, y):
     m, n = X.shape
     theta = theta.reshape((n,1))
-    y = y.reshape((m,1))
     
-    grad = np.dot(X.T, sigmoid(np.dot(X, theta))-y) / m;
+    hypothesis = sigmoid(np.dot(X, theta))
+    grad = np.dot(X.T, sigmoid(hypothesis - y)) / m;
 
     return grad
 
 
 def computeCost(theta, X, y):
     m = X.shape[0]
-    y = y.reshape((m,1))
-    
-    term1 = np.log(sigmoid(np.dot(X, theta)))
-    term2 = np.log(1-sigmoid(np.dot(X, theta)))
 
-    J = (np.dot(y.T, term1) + np.dot((1 - y).T, term2)) / (-m)
+    hypothesis = sigmoid(np.dot(X, theta))
+    J = (np.dot(y.T, np.log(hypothesis)) + np.dot((1 - y).T, np.log(1-hypothesis))) / (-m)
 
     return J
 
